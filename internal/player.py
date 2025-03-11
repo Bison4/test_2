@@ -54,3 +54,6 @@ class Hero(GSprite):
             else:
                 self.anim_walk_left.rotate()
                 self.animation_count_walk_l = 0
+    def gravity_hero(self,gravity):
+        if gravity == True:
+            self.rect.y += GRAVITY_SREED

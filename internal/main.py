@@ -11,13 +11,17 @@ game = True
 FPS = 60
 clock = pygame.time.Clock()
 hero = Hero('assets/error.png', WIGTH//2,(HEIGHT//7)*4,3,WIGTH//16,HEIGHT//5)
-ground = Ground('assets/floor/floor.png', 0,(HEIGHT//7)*6,3,WIGTH,HEIGHT//5)
+grounds = Ground('assets/floor/floor.png', 0,(HEIGHT//7)*6,3,WIGTH,HEIGHT//5)
 while True:
     screen.blit(bg, (0, 0))
+    grounds.reset(screen)
+    grounds.collide(hero)
+    GRAVITY = grounds.gravity
     hero.reset(screen)
-    ground.reset(screen)
-    ground.collide(hero)
+
+
     hero.walk()
+    hero.gravity_hero(GRAVITY)
     hero.walk_anim_right()
     hero.walk_anim_left()
     for e in pygame.event.get():

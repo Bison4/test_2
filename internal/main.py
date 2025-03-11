@@ -14,12 +14,13 @@ while True:
     screen.blit(bg, (0, 0))
     hero.reset(screen)
     hero.walk()
-    hero.walk_anim()
+    hero.walk_anim_right()
+    hero.walk_anim_left()
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
                 exit()
         if e.type == pygame.VIDEORESIZE:
-
+            HEIGHT = e.w
             bg = pygame.transform.scale(bg,(e.w,e.h))
     pygame.display.flip()
     clock.tick(FPS)

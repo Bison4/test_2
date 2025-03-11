@@ -5,35 +5,52 @@ from collections import deque
 class Hero(GSprite):
     def __init__(self, image_path, pos_x, pos_y, speed, size_x, size_y):
         super().__init__(image_path, pos_x, pos_y, speed, size_x, size_y)
-        self.anim_walk = deque([pygame.transform.scale(pygame.image.load(f'assets/Solider/Soldier_1/walk/{i}.png'),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
+
+        self.WIGTH = WIGTH
+        self.anim_walk_right = deque([pygame.transform.scale(pygame.image.load(f'assets/Solider/Soldier_1/walk/right/{i}.png'),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
+        self.anim_walk_left = deque([pygame.transform.scale(pygame.image.load(f'assets/Solider/Soldier_1/walk/left/{i}.png'),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
+        self.animation_count_walk_l = 0
+
         self.animation_count_walk = 0
-        self.anim_walk_p = False
+        self.anim_walk_p_r = False
+        self.anim_walk_p_l = False
+
         self.anim_speed = 10
     def walk(self):
+        self.anim_walk_p_r = False
+        self.anim_walk_p_l = False
         key_presed = pygame.key.get_pressed()
 
         if key_presed[pygame.K_LEFT] and self.rect.x > 0:
             self.rect.x -= self.speed
-            self.anim_walk_p = True
-        if key_presed[pygame.K_RIGHT] and self.rect.x + self.size_x <= 1000 :
+            self.anim_walk_p_l = True
+        if key_presed[pygame.K_RIGHT] and self.rect.x + self.size_x <= self.WIGTH :
             self.rect.x += self.speed
-            self.anim_walk_p = True
+            self.anim_walk_p_r = True
 
 
-        if key_presed[pygame.K_d] and self.rect.x + self.size_x <= 1000 :
+        if key_presed[pygame.K_d] and self.rect.x + self.size_x <= self.WIGTH :
             self.rect.x += self.speed
-            self.anim_walk_p = True
+            self.anim_walk_p_r = True
 
         if key_presed[pygame.K_a] and self.rect.x > 0:
             self.rect.x -= self.speed
-            self.anim_walk_p = True
+            self.anim_walk_p_l = True
 
-        print(self.rect.x)
-    def walk_anim(self):
-        if self.anim_walk_p:
-            self.image = self.anim_walk[0]
+
+    def walk_anim_right(self):
+        if self.anim_walk_p_r:
+            self.image = self.anim_walk_right[0]
             if self.animation_count_walk < self.anim_speed:
                 self.animation_count_walk += 1
             else:
-                self.anim_walk.rotate()
+                self.anim_walk_right.rotate()
                 self.animation_count_walk = 0
+    def walk_anim_left(self):
+        if self.anim_walk_p_l:
+            self.image = self.anim_walk_left[0]
+            if self.animation_count_walk_l < self.anim_speed:
+                self.animation_count_walk_l += 1
+            else:
+                self.anim_walk_left.rotate()
+                self.animation_count_walk_l = 0

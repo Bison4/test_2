@@ -14,6 +14,9 @@ class Hero(GSprite):
         self.animation_count_walk = 0
         self.anim_walk_p_r = False
         self.anim_walk_p_l = False
+        self.fire_walk_r = False
+        self.fire_walk_l = False
+
 
         self.anim_speed = 10
     def walk(self):
@@ -24,18 +27,25 @@ class Hero(GSprite):
         if key_presed[pygame.K_LEFT] and self.rect.x > 0:
             self.rect.x -= self.speed
             self.anim_walk_p_l = True
+            self.fire_walk_r = False
+            self.fire_walk_l = True
         if key_presed[pygame.K_RIGHT] and self.rect.x + self.size_x <= self.WIGTH :
             self.rect.x += self.speed
             self.anim_walk_p_r = True
+            self.fire_walk_r = True
+            self.fire_walk_l = False
 
 
         if key_presed[pygame.K_d] and self.rect.x + self.size_x <= self.WIGTH :
             self.rect.x += self.speed
             self.anim_walk_p_r = True
-
+            self.fire_walk_r = True
+            self.fire_walk_l = False
         if key_presed[pygame.K_a] and self.rect.x > 0:
             self.rect.x -= self.speed
             self.anim_walk_p_l = True
+            self.fire_walk_r = False
+            self.fire_walk_l = True
 
 
     def walk_anim_right(self):

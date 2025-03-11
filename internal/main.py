@@ -3,6 +3,7 @@ from settings import *
 from player import Hero
 from ground import Ground
 from  GameSprite import GSprite
+from bullet import Bullet
 screen = pygame.display.set_mode((WIGTH,HEIGHT),pygame.RESIZABLE)
 bg = pygame.image.load('assets/background/fon.jpg')
 bg = pygame.transform.scale(bg,(WIGTH,HEIGHT))
@@ -12,6 +13,7 @@ FPS = 60
 clock = pygame.time.Clock()
 hero = Hero('assets/error.png', WIGTH//2,(HEIGHT//7)*4,3,WIGTH//16,HEIGHT//5)
 grounds = Ground('assets/floor/floor.png', 0,(HEIGHT//7)*6,3,WIGTH,HEIGHT//5)
+bullet_group = pygame.sprite.Group()
 while True:
     screen.blit(bg, (0, 0))
     grounds.reset(screen)
@@ -30,5 +32,14 @@ while True:
         if e.type == pygame.VIDEORESIZE:
             HEIGHT = e.w
             bg = pygame.transform.scale(bg,(e.w,e.h))
+        if e.type == pygame.MOUSEBUTTONDOWN:
+            FIRE = True
+    if FIRE:
+        bul = Bullet('assets/bullett.png',(hero.rect.center),(20,4), hero)
+        bullet_group.add(bul)
+
+    bullet_group.draw(screen)
+    bullet_group.update()
+    FIRE = False
     pygame.display.flip()
     clock.tick(FPS)

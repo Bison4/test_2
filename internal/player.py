@@ -1,27 +1,40 @@
-from GameSprite import GSprite
-import pygame
-from settings import *
 from collections import deque
+
+import pygame
+from GameSprite import GSprite
+from settings import *
+
+
 class Hero(GSprite):
-    def __init__(self, image_path, pos_x, pos_y, speed, size_x, size_y):
+    def __init__(self, image_path, pos_x, pos_y, speed, size_x, size_y, gravity_speed, fire):
         super().__init__(image_path, pos_x, pos_y, speed, size_x, size_y)
 
         self.WIGTH = WIGTH
-        self.anim_walk_right = deque([pygame.transform.scale(pygame.image.load(f'assets/Solider/Soldier_1/walk/right/{i}.png'),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
-        self.anim_walk_left = deque([pygame.transform.scale(pygame.image.load(f'assets/Solider/Soldier_1/walk/left/{i}.png'),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
-        self.animation_count_walk_l = 0
+        self.gravity = True
+        self.fire = fire
+        self.gravity_speed = gravity_speed
+        self.anim_walk_right = deque([pygame.transform.scale(pygame.image.load(f"assets/Solider/Soldier_1/walk/right/{i}.png"),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
+        self.anim_walk_left = deque([pygame.transform.scale(pygame.image.load(f"assets/Solider/Soldier_1/walk/left/{i}.png"),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
+        self.anim_shot_right = deque([pygame.transform.scale(pygame.image.load(f"assets/Solider/Soldier_1/shots/right/{i}.png"),(self.size_x,self.size_y)).convert_alpha() for i in range(3)])
+        self.anim_shot_left = deque([pygame.transform.scale(pygame.image.load(f"assets/Solider/Soldier_1/shots/left/{i}.png"),(self.size_x,self.size_y)).convert_alpha() for i in range(3)])
 
+        self.animation_count_walk_l = 0
+        self.animation_count_shot = 0
         self.animation_count_walk = 0
         self.anim_walk_p_r = False
         self.anim_walk_p_l = False
         self.fire_walk_r = False
         self.fire_walk_l = False
+        self.shot_r = False
+        self.shot_l = False
+        self.score_anim_shot = 0
 
 
         self.anim_speed = 10
     def walk(self):
         self.anim_walk_p_r = False
         self.anim_walk_p_l = False
+
         key_presed = pygame.key.get_pressed()
 
         if key_presed[pygame.K_LEFT] and self.rect.x > 0:
@@ -29,24 +42,24 @@ class Hero(GSprite):
             self.anim_walk_p_l = True
             self.fire_walk_r = False
             self.fire_walk_l = True
+
         if key_presed[pygame.K_RIGHT] and self.rect.x + self.size_x <= self.WIGTH :
             self.rect.x += self.speed
             self.anim_walk_p_r = True
             self.fire_walk_r = True
             self.fire_walk_l = False
 
-
         if key_presed[pygame.K_d] and self.rect.x + self.size_x <= self.WIGTH :
             self.rect.x += self.speed
             self.anim_walk_p_r = True
             self.fire_walk_r = True
             self.fire_walk_l = False
+
         if key_presed[pygame.K_a] and self.rect.x > 0:
             self.rect.x -= self.speed
             self.anim_walk_p_l = True
             self.fire_walk_r = False
             self.fire_walk_l = True
-
 
     def walk_anim_right(self):
         if self.anim_walk_p_r:
@@ -56,6 +69,37 @@ class Hero(GSprite):
             else:
                 self.anim_walk_right.rotate()
                 self.animation_count_walk = 0
+    def shot_anim_right(self):
+        if self.shot_r:
+            self.image = self.anim_shot_right[0]
+            if self.animation_count_shot < self.anim_speed:
+                self.animation_count_shot += 1
+            else:
+                self.anim_shot_right.rotate()
+                self.score_anim_shot += 1
+                self.animation_count_shot = 0
+    def fire_check(self, fire):
+        if fire and self.fire_walk_l:
+
+            self.shot_l = True
+        if fire and self.fire_walk_r:
+
+            self.shot_r = True
+        if self.score_anim_shot == 3:
+            self.shot_l = False
+            self.shot_r = False
+
+            self.score_anim_shot = 0
+    def shot_anim_left(self):
+        if self.shot_l :
+            self.image = self.anim_shot_left[0]
+            if self.animation_count_shot < self.anim_speed:
+                self.animation_count_shot += 1
+            else:
+                self.anim_shot_left.rotate()
+                self.score_anim_shot += 1
+
+                self.animation_count_shot = 0
     def walk_anim_left(self):
         if self.anim_walk_p_l:
             self.image = self.anim_walk_left[0]
@@ -64,6 +108,6 @@ class Hero(GSprite):
             else:
                 self.anim_walk_left.rotate()
                 self.animation_count_walk_l = 0
-    def gravity_hero(self,gravity):
-        if gravity == True:
-            self.rect.y += GRAVITY_SREED
+    def gravity_hero(self):
+        if self.gravity :
+            self.rect.y += self.gravity_speed

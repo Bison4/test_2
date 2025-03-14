@@ -1,6 +1,7 @@
 import pygame
 from settings import *
 
+
 class GSprite(pygame.sprite.Sprite):
     def __init__(self,image_path,pos_x,pos_y,speed,size_x,size_y):
 

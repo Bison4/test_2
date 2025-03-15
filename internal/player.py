@@ -1,14 +1,15 @@
 from GameSprite import GSprite
 import pygame
 from settings import *
+from helper import resource_path
 from collections import deque
 class Hero(GSprite):
     def __init__(self, image_path, pos_x, pos_y, speed, size_x, size_y):
         super().__init__(image_path, pos_x, pos_y, speed, size_x, size_y)
 
         self.WIGTH = WIGTH
-        self.anim_walk_right = deque([pygame.transform.scale(pygame.image.load(f'assets/Solider/Soldier_1/walk/right/{i}.png'),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
-        self.anim_walk_left = deque([pygame.transform.scale(pygame.image.load(f'assets/Solider/Soldier_1/walk/left/{i}.png'),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
+        self.anim_walk_right = deque([pygame.transform.scale(pygame.image.load(resource_path(f'assets/Solider/Soldier_1/walk/right/{i}.png')),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
+        self.anim_walk_left = deque([pygame.transform.scale(pygame.image.load(resource_path(f'assets/Solider/Soldier_1/walk/left/{i}.png')),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
         self.animation_count_walk_l = 0
 
         self.animation_count_walk = 0

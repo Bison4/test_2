@@ -1,5 +1,5 @@
 from collections import deque
-
+from helper import resource_path
 import pygame
 from GameSprite import GSprite
 from settings import *
@@ -13,10 +13,10 @@ class Hero(GSprite):
         self.gravity = True
         self.fire = fire
         self.gravity_speed = gravity_speed
-        self.anim_walk_right = deque([pygame.transform.scale(pygame.image.load(f"assets/Solider/Soldier_1/walk/right/{i}.png"),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
-        self.anim_walk_left = deque([pygame.transform.scale(pygame.image.load(f"assets/Solider/Soldier_1/walk/left/{i}.png"),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
-        self.anim_shot_right = deque([pygame.transform.scale(pygame.image.load(f"assets/Solider/Soldier_1/shots/right/{i}.png"),(self.size_x,self.size_y)).convert_alpha() for i in range(3)])
-        self.anim_shot_left = deque([pygame.transform.scale(pygame.image.load(f"assets/Solider/Soldier_1/shots/left/{i}.png"),(self.size_x,self.size_y)).convert_alpha() for i in range(3)])
+        self.anim_walk_right = deque([pygame.transform.scale(pygame.image.load(resource_path(f"assets/Solider/Soldier_1/walk/right/{i}.png")),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
+        self.anim_walk_left = deque([pygame.transform.scale(pygame.image.load(resource_path(f"assets/Solider/Soldier_1/walk/left/{i}.png")),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
+        self.anim_shot_right = deque([pygame.transform.scale(pygame.image.load(resource_path(f"assets/Solider/Soldier_1/shots/right/{i}.png")),(self.size_x,self.size_y)).convert_alpha() for i in range(4)])
+        self.anim_shot_left = deque([pygame.transform.scale(pygame.image.load(resource_path(f"assets/Solider/Soldier_1/shots/left/{i}.png")),(self.size_x,self.size_y)).convert_alpha() for i in range(4)])
 
         self.animation_count_walk_l = 0
         self.animation_count_shot = 0
@@ -85,7 +85,7 @@ class Hero(GSprite):
         if fire and self.fire_walk_r:
 
             self.shot_r = True
-        if self.score_anim_shot == 3:
+        if self.score_anim_shot == 4:
             self.shot_l = False
             self.shot_r = False
 

@@ -1,12 +1,12 @@
 import pygame
 from settings import *
-
+from helper import resource_path
 
 class GSprite(pygame.sprite.Sprite):
     def __init__(self,image_path,pos_x,pos_y,speed,size_x,size_y):
 
 
-        self.image = pygame.transform.scale(pygame.image.load(image_path),(size_x,size_y))
+        self.image = pygame.transform.scale(pygame.image.load(resource_path(image_path)),(size_x,size_y))
         self.rect = self.image.get_rect()
         self.image_path = image_path
         self.rect.x = pos_x

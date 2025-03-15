@@ -10,7 +10,7 @@ class Hero(GSprite):
         self.anim_walk_right = deque([pygame.transform.scale(pygame.image.load(f'assets/Solider/Soldier_1/walk/right/{i}.png'),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
         self.anim_walk_left = deque([pygame.transform.scale(pygame.image.load(f'assets/Solider/Soldier_1/walk/left/{i}.png'),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
         self.animation_count_walk_l = 0
-
+        self.gravity = True
         self.animation_count_walk = 0
         self.anim_walk_p_r = False
         self.anim_walk_p_l = False
@@ -54,6 +54,6 @@ class Hero(GSprite):
             else:
                 self.anim_walk_left.rotate()
                 self.animation_count_walk_l = 0
-    def gravity_hero(self,gravity):
-        if gravity == True:
+    def gravity_hero(self):
+        if self.gravity == True:
             self.rect.y += GRAVITY_SREED

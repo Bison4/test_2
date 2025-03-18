@@ -17,7 +17,8 @@ class Hero(GSprite):
         self.anim_walk_left = deque([pygame.transform.scale(pygame.image.load(resource_path(f"assets/Solider/Soldier_1/walk/left/{i}.png")),(self.size_x,self.size_y)).convert_alpha() for i in range(7)])
         self.anim_shot_right = deque([pygame.transform.scale(pygame.image.load(resource_path(f"assets/Solider/Soldier_1/shots/right/{i}.png")),(self.size_x,self.size_y)).convert_alpha() for i in range(4)])
         self.anim_shot_left = deque([pygame.transform.scale(pygame.image.load(resource_path(f"assets/Solider/Soldier_1/shots/left/{i}.png")),(self.size_x,self.size_y)).convert_alpha() for i in range(4)])
-
+        self.helth = 200
+        self.COLOR = 255
         self.animation_count_walk_l = 0
         self.animation_count_shot = 0
         self.animation_count_walk = 0
@@ -37,17 +38,9 @@ class Hero(GSprite):
 
         key_presed = pygame.key.get_pressed()
 
-        if key_presed[pygame.K_LEFT] and self.rect.x > 0:
-            self.rect.x -= self.speed
-            self.anim_walk_p_l = True
-            self.fire_walk_r = False
-            self.fire_walk_l = True
 
-        if key_presed[pygame.K_RIGHT] and self.rect.x + self.size_x <= self.WIGTH :
-            self.rect.x += self.speed
-            self.anim_walk_p_r = True
-            self.fire_walk_r = True
-            self.fire_walk_l = False
+
+
 
         if key_presed[pygame.K_d] and self.rect.x + self.size_x <= self.WIGTH :
             self.rect.x += self.speed

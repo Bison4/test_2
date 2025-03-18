@@ -1,18 +1,21 @@
+"""
+главный файл , здесь я вызываю все модули делаю цикл и тд
+"""
 import pygame
-from settings import *
-from player import Hero
 from ground import Ground
 from helper import resource_path
-from  GameSprite import GSprite
+from player import Hero
+from settings import *
+
 screen = pygame.display.set_mode((WIGTH,HEIGHT),pygame.RESIZABLE)
-bg = pygame.image.load('assets/background/fon.jpg')
+bg = pygame.image.load("assets/background/fon.jpg")
 bg = pygame.transform.scale(bg,(WIGTH,HEIGHT))
 screen.blit(bg,(0,0))
 game = True
 FPS = 60
 clock = pygame.time.Clock()
-hero = Hero(resource_path('assets/image/error.png'), WIGTH//2,(HEIGHT//7)*4,3,WIGTH//16,HEIGHT//5)
-grounds = Ground(resource_path('assets/floor/floor.png'), 0,(HEIGHT//7)*6,3,WIGTH,HEIGHT//5)
+hero = Hero(resource_path("assets/image/error.png"), WIGTH//2,(HEIGHT//7)*4,3,WIGTH//16,HEIGHT//5)
+grounds = Ground(resource_path("assets/floor/floor.png"), 0,(HEIGHT//7)*6,3,WIGTH,HEIGHT//5)
 while True:
     screen.blit(bg, (0, 0))
     grounds.reset(screen)

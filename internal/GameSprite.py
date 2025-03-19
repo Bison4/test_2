@@ -2,7 +2,6 @@
 Тут класс для создания игрока и тд
 """
 import pygame
-from settings import *
 
 
 class GSprite(pygame.sprite.Sprite):

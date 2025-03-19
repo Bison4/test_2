@@ -1,3 +1,6 @@
+"""
+главный файл , здесь я вызываю все модули делаю цикл и тд
+"""
 import pygame
 from bullet import Bullet
 from enemy import Enemy
@@ -66,7 +69,7 @@ while True:
 
 
     if FIRE:
-        bul = Bullet("assets/image/bullett.png",(hero.rect.center),(20,4), hero, zombie_list[0])
+        bul = Bullet("assets/image/bullett.png",(hero.rect.center),(20,4), hero, zombie_list[0], zombie_group)
         bullet_group.add(bul)
     hero.fire_check(FIRE)
     hero.shot_anim_right()

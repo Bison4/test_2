@@ -1,3 +1,6 @@
+"""
+Тут класс для создания игрока
+"""
 from GameSprite import GSprite
 import pygame
 from settings import *
@@ -5,6 +8,9 @@ from helper import resource_path
 from collections import deque
 class Hero(GSprite):
     def __init__(self, image_path, pos_x, pos_y, speed, size_x, size_y):
+        """
+        добавляем необходимые переменные
+        """
         super().__init__(image_path, pos_x, pos_y, speed, size_x, size_y)
 
         self.WIGTH = WIGTH
@@ -18,6 +24,9 @@ class Hero(GSprite):
 
         self.anim_speed = 10
     def walk(self):
+        """
+        управление спрайтом
+        """
         self.anim_walk_p_r = False
         self.anim_walk_p_l = False
         key_presed = pygame.key.get_pressed()
@@ -40,6 +49,9 @@ class Hero(GSprite):
 
 
     def walk_anim_right(self):
+        """
+        анимация хотьбы на право спрайт
+        """
         if self.anim_walk_p_r:
             self.image = self.anim_walk_right[0]
             if self.animation_count_walk < self.anim_speed:
@@ -48,6 +60,9 @@ class Hero(GSprite):
                 self.anim_walk_right.rotate()
                 self.animation_count_walk = 0
     def walk_anim_left(self):
+        """
+        анимация хотьбы на лево спрайт
+        """
         if self.anim_walk_p_l:
             self.image = self.anim_walk_left[0]
             if self.animation_count_walk_l < self.anim_speed:

@@ -1,3 +1,6 @@
+"""
+главный файл , здесь я вызываю все модули делаю цикл и тд
+"""
 import pygame
 from settings import *
 from player import Hero

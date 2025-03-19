@@ -1,20 +1,19 @@
 import pygame
 from bullet import Bullet
+from effects import Blud, Corpse
 from enemy import Enemy
 from ground import Ground
-from player import Hero
-from settings import *
-from effects import Blud
-from effects import Corpse
 from helper import resource_path
 from map import Ball, mini_map
+from player import Hero
+from settings import *
 
 screen = pygame.display.set_mode((WIGTH,HEIGHT),pygame.RESIZABLE)
 sc_map = pygame.Surface((WIGTH // MAP_SCALE, HEIGHT // MAP_SCALE))
 
 bg = pygame.image.load(resource_path("assets/background/fon.jpg"))
 bg = pygame.transform.scale(bg,(WIGTH,HEIGHT))
-pygame.display.set_caption('Niger')
+pygame.display.set_caption("Niger")
 screen.blit(bg,(0,0))
 game = True
 FPS = 60
@@ -38,7 +37,6 @@ pygame.time.set_timer(zombie_event, 2000)
 
 player_center = [200,200]
 def lab():
-    global player_center
     sc_map.fill(BLACK)
     player = pygame.draw.circle(sc_map, RED, (player_center[0],player_center[1]), MAP_TILE//MAP_SCALE)
     key_presed = pygame.key.get_pressed()
@@ -60,24 +58,24 @@ def lab():
     screen.blit(sc_map, MAP_POS)
 def game_bar():
     size_x = hero.helth
-    bar = pygame.draw.rect(screen, (0,hero.COLOR, 0), (10, 10, size_x, 20))
+    pygame.draw.rect(screen, (0,hero.COLOR, 0), (10, 10, size_x, 20))
     if size_x <= 5:
         exit()
     if hero.helth < 200:
         hero.helth += 0.1
         hero.COLOR += 0.1
-def dis_time():
-    global TV_EVENT
+def dis_time(tv_event):
     key_presed = pygame.key.get_pressed()
 
     if key_presed[pygame.K_e] and hero.rect.colliderect(TV):
-        TV_EVENT = True
+        tv_event = True
     if key_presed[pygame.K_ESCAPE]:
-        TV_EVENT = False
-    if TV_EVENT == True:
+        tv_event = False
+    if tv_event is True:
         TV_dis.draw(screen)
         lab()
-while True:
+running = True
+while running:
     screen.blit(bg, (0, 0))
     grounds.reset(screen)
     grounds.collide(hero)
@@ -92,7 +90,7 @@ while True:
     hero.walk_anim_left()
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
-                exit()
+              running = False
         if e.type == pygame.VIDEORESIZE:
             HEIGHT = e.w
             bg = pygame.transform.scale(bg,(e.w,e.h))
@@ -123,8 +121,11 @@ while True:
     corpse_group.draw(screen)
     zombie_group.draw(screen)
     TV.draw(screen)
-    dis_time()
+    dis_time(TV_EVENT)
     zombie_group.update()
     FIRE = False
     pygame.display.flip()
     clock.tick(FPS)
+
+
+pygame.quit()

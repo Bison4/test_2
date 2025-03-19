@@ -1,12 +1,19 @@
+"""
+Тут класс для создания игрока
+"""
 from collections import deque
-from helper import resource_path
+
 import pygame
 from GameSprite import GSprite
+from helper import resource_path
 from settings import *
 
 
 class Hero(GSprite):
     def __init__(self, image_path, pos_x, pos_y, speed, size_x, size_y, gravity_speed, fire):
+        """
+        добавляем необходимые переменные
+        """
         super().__init__(image_path, pos_x, pos_y, speed, size_x, size_y)
 
         self.WIGTH = WIGTH
@@ -33,6 +40,9 @@ class Hero(GSprite):
 
         self.anim_speed = 10
     def walk(self):
+        """
+        управление спрайтом
+        """
         self.anim_walk_p_r = False
         self.anim_walk_p_l = False
 
@@ -55,6 +65,9 @@ class Hero(GSprite):
             self.fire_walk_l = True
 
     def walk_anim_right(self):
+        """
+        анимация хотьбы на право спрайт
+        """
         if self.anim_walk_p_r:
             self.image = self.anim_walk_right[0]
             if self.animation_count_walk < self.anim_speed:
@@ -63,6 +76,9 @@ class Hero(GSprite):
                 self.anim_walk_right.rotate()
                 self.animation_count_walk = 0
     def shot_anim_right(self):
+        """
+        анимация стрельба на право спрайт
+        """
         if self.shot_r:
             self.image = self.anim_shot_right[0]
             if self.animation_count_shot < self.anim_speed:
@@ -72,6 +88,9 @@ class Hero(GSprite):
                 self.score_anim_shot += 1
                 self.animation_count_shot = 0
     def fire_check(self, fire):
+        """
+        проверка в какую сторону стреляет спрайт
+        """
         if fire and self.fire_walk_l:
 
             self.shot_l = True
@@ -84,6 +103,9 @@ class Hero(GSprite):
 
             self.score_anim_shot = 0
     def shot_anim_left(self):
+        """
+        анимация стрельба на лево спрайт
+        """
         if self.shot_l :
             self.image = self.anim_shot_left[0]
             if self.animation_count_shot < self.anim_speed:
@@ -94,6 +116,9 @@ class Hero(GSprite):
 
                 self.animation_count_shot = 0
     def walk_anim_left(self):
+        """
+        анимация хотьбы на лево спрайт
+        """
         if self.anim_walk_p_l:
             self.image = self.anim_walk_left[0]
             if self.animation_count_walk_l < self.anim_speed:
@@ -102,5 +127,8 @@ class Hero(GSprite):
                 self.anim_walk_left.rotate()
                 self.animation_count_walk_l = 0
     def gravity_hero(self):
+        """
+        гравитация спрайта
+        """
         if self.gravity :
             self.rect.y += self.gravity_speed

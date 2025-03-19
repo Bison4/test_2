@@ -1,6 +1,7 @@
 import pygame
-from settings import *
 from helper import resource_path
+from settings import *
+
 
 class GSprite(pygame.sprite.Sprite):
     def __init__(self,image_path,pos_x,pos_y,speed,size_x,size_y):
@@ -14,5 +15,5 @@ class GSprite(pygame.sprite.Sprite):
         self.size_x = size_x
         self.size_y = size_y
         self.speed = speed
-    def reset(self,screen):
+    def reset(self, screen):
         screen.blit(self.image,(self.rect.x,self.rect.y))
